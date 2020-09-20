@@ -67,18 +67,17 @@ class clarifaiController extends Controller
 
             $gd_image = imagecreatefromstring(file_get_contents($imageurl));
 
-            $croppedImg = imagecrop($gd_image, ['x' => $x_one, 'y' => $y_one, 'width' => $rect_width, 'height' => $rect_height]);
+            $croppedImg = imagecrop($gd_image, ['x' => $x_one - 25, 'y' => $y_one - 25, 'width' => $rect_width + 25, 'height' => $rect_height+25]);
 
             // header('Content-Type: image/png');
             // ob_start();
             imagepng($croppedImg,  public_path()."/images/".$value["product"].".png");
             imagedestroy($croppedImg);
-            // $imagedata = ob_get_clean();
-            // dd();
+
 
             array_push($images, $value["product"].".png");
-            
         }
+
         $responses = $this->uploadImages($images);
         // dd($responses);
         return $responses;
@@ -191,7 +190,7 @@ class clarifaiController extends Controller
     public function testClarifai(){
 
         $imgURL = 'https://scontent.fdac31-1.fna.fbcdn.net/v/t1.0-9/117244889_3817065401643690_8295446081903188797_n.jpg?_nc_cat=111&_nc_sid=8024bb&_nc_ohc=UjJQB_0Zv7IAX-fFThz&_nc_ht=scontent.fdac31-1.fna&oh=c9ea50d23b395e20fabe1ec9fdc2f2cb&oe=5F5AEA56';
-        $client = new ClarifaiClient('c37baaad5dce485abbabe363cf133a31');
+        $client = new ClarifaiClient('8dc2482f37264e309452e3725c1b474c');
 
         // $model = $client;
         // dd($model);
@@ -234,7 +233,7 @@ class clarifaiController extends Controller
         $imageurl = $request->input('imgname');
 
         // dd($imageurl);
-        $client = new ClarifaiClient('c37baaad5dce485abbabe363cf133a31');
+        $client = new ClarifaiClient('8dc2482f37264e309452e3725c1b474c');
 
 
         $response = $client->searchInputs(
